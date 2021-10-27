@@ -25,6 +25,7 @@ public class UserController {
     public ResponseEntity<List<User>> getAll() {
         List<User> userList = userService.getAll();
         return ResponseEntity.ok(userList);
+
     }
 
     // @RolesAllowed(value = "ROLE_ADMIN")
@@ -55,7 +56,7 @@ public class UserController {
     }
 
     //working
-    @GetMapping("/login")
+    @PostMapping("/login")
     // @RolesAllowed(value = "ROLE_USER")
     public boolean login(@RequestParam String email, @RequestParam String password) throws NotFoundException {
         if (userService.logIn(email, password)) {

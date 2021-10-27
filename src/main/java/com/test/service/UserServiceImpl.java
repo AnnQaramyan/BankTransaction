@@ -136,7 +136,7 @@ public class UserServiceImpl implements UserService {
                     password,
                     user.getPassword()
             );
-            if(isPasswordMatches && user.getStatus().equals("ACTIVE")){
+            if(isPasswordMatches && user.getStatus().toString().equals("ACTIVE")){
                return true;
             }
         }
