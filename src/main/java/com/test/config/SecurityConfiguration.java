@@ -24,13 +24,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
-   @Override
+ @Override
     public void configure(WebSecurity web) throws Exception {
-        web
-                .ignoring()
-                .antMatchers(HttpMethod.POST, "/**");
+     web
+             .ignoring()
+             .antMatchers(HttpMethod.GET, "/**");
     }
+
 
     @Override
     public void configure(HttpSecurity http) throws Exception {

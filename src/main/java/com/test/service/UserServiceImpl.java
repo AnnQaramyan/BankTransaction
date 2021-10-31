@@ -2,10 +2,15 @@ package com.test.service;
 
 import com.test.model.Authority;
 import com.test.model.User;
+import com.test.model.enums.LogInStatus;
 import com.test.model.enums.Status;
 import com.test.repository.AuthorityRepository;
+import com.test.repository.TransactionRepository;
 import com.test.repository.UserRepository;
-import com.test.util.exceptions.*;
+import com.test.util.exceptions.DuplicateException;
+import com.test.util.exceptions.DuplicateVerificationCode;
+import com.test.util.exceptions.NotFoundException;
+import com.test.util.exceptions.OutOfTimeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,6 +23,9 @@ import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    @Autowired
+    TransactionRepository transactionRepository;
 
     @Autowired
     public UserRepository userRepository;
@@ -157,9 +165,11 @@ public class UserServiceImpl implements UserService {
             }
 
             user.setStatus(Status.ACTIVE);
+            user.setLogInStatus(LogInStatus.ACTIVE);
             user.setVerificationCode(null);
             userRepository.save(user);
         }
     }
+
 
 }

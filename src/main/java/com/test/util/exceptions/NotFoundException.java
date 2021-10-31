@@ -9,7 +9,7 @@ public class NotFoundException extends Exception {
     }
 
     public NotFoundException(String message) {
-        super(message);
+        super("something is wrong");
     }
 
     public NotFoundException(String message, Throwable cause) {

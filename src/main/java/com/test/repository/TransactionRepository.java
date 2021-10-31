@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TransactionRepository  extends JpaRepository<Transaction, Integer> {
-
+    Transaction getById(int id);
+    void deleteById(int id);
 }

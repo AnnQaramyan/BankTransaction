@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title> Create Transaction </title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container text-center">
+    <div>
+        <h1>Create Transaction</h1>
+    </div>
+
+    <form th:action="@{/home/create-transaction}" method="get" th:object="${transaction} "
+          style="max-width: 600px; margin : 0 auto"
+    >
+        <div class="m-3">
+
+            <div class="form-group">
+                <label for="id" class="text-info">User Id:</label><br>
+                <input type="number" name="id" id="id" class="form-control" th:field="*{userId}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="amount" class="text-info">Amount:</label><br>
+                <input type="number" name="amount" id="amount" class="form-control" th:field="*{amount}" required>
+            </div>
+
+            <div>
+            <h3>Select Transaction Type</h3>
+            <input type="radio" name="transactionType" value="DEPOSIT" th:field="*{transactionType}"  required> Deposit
+            <input type="radio" name="transactionType" value="WITHDRAWAL" th:field="*{transactionType}"  required> Withdrawal
+        </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-info btn-md">Create Transaction</button>
+            </div>
+
+        </div>
+        <div id="login-link" class="text-right">
+            <a href="/home/personal-account" class="text-info">Go Back</a>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title> Personal account</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="m-3"><div class="form-group">
+    <h1></h1></div>
+</div>
+<div class="container text-center">
+
+    <form th:action="@{/home/transaction}" method="get"
+          style="max-width: 600px; margin : 0 auto"
+    >
+        <div class="m-3"><div class="form-group">
+            <h1> Welcome to your personal Bank account</h1></div><br><br><br>
+        </div>
+
+        <div class="m-3">
+            <div class="form-group">
+                <button type="submit" class="btn btn-info btn-md">Create Transaction</button>
+            </div>
+
+        </div>
+
+    </form>
+
+
+
+    <form th:action="@{/home/cancel-transaction}" method="get"
+          style="max-width: 600px; margin : 0 auto"
+    >
+        <div class="m-3">
+            <div class="form-group">
+                <button type="submit" class="btn btn-info btn-md">Cancel Transaction</button>
+            </div>
+
+        </div>
+
+    </form>
+
+
+
+    <form th:action="@{/home/transactions}" method="get"
+          style="max-width: 600px; margin : 0 auto"
+    >
+        <div class="m-3">
+            <div class="form-group">
+                <button type="submit" class="btn btn-info btn-md">Transactions</button>
+            </div>
+
+        </div>
+
+    </form>
+
+    <form th:action="@{/home/log-out}" method="get"
+          style="max-width: 600px; margin : 0 auto"
+    >
+        <div class="m-3">
+            <div class="form-group">
+                <button type="submit" class="btn btn-info btn-md">Log Out</button>
+            </div>
+
+        </div>
+
+    </form>
+</div>
+
+</body>
+</html>

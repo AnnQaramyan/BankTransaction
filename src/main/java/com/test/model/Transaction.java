@@ -20,9 +20,12 @@ public class Transaction implements  Comparable<Transaction>{
     @Column(name = "date")
     private Date date;
 
-    @JoinColumn(name = "transactions")
+    @JoinColumn(name = "transaction_id")
     @ManyToOne
     private User user;
+
+    @Column
+    private int userId;
 
     @Column
     private double amount;
@@ -75,6 +78,14 @@ public class Transaction implements  Comparable<Transaction>{
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     @Override

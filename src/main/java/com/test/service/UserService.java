@@ -26,4 +26,5 @@ public interface UserService {
     boolean logIn(String email, String password) throws NotFoundException;
 
     void verifyCode(String code) throws NotFoundException, OutOfTimeException;
+
 }

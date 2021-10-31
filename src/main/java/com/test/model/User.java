@@ -1,6 +1,7 @@
 package com.test.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.test.model.enums.LogInStatus;
 import com.test.model.enums.Status;
 
 import javax.persistence.*;
@@ -35,16 +36,18 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @Enumerated(EnumType.STRING)
+    private LogInStatus logInStatus;
+
     @Column(name = "verification_code_date")
     private Date verificationCodeDate;
 
 
     @OneToMany(mappedBy = "user")
-    private List<Transaction> transactions;
+    private List<Transaction> transaction_id;
 
     @Column
     private double account;
-
 
     @JsonIgnore
     @ManyToMany
@@ -132,12 +135,12 @@ public class User {
         this.password = password;
     }
 
-    public List<Transaction> getTransactions() {
-        return transactions;
+    public List<Transaction> getTransaction_id() {
+        return transaction_id;
     }
 
-    public void setTransactions(List<Transaction> transactions) {
-        this.transactions = transactions;
+    public void setTransaction_id(List<Transaction> transaction_id) {
+        this.transaction_id = transaction_id;
     }
 
     public double getAccount() {
@@ -146,6 +149,14 @@ public class User {
 
     public void setAccount(double account) {
         this.account = account;
+    }
+
+    public LogInStatus getLogInStatus() {
+        return logInStatus;
+    }
+
+    public void setLogInStatus(LogInStatus logInStatus) {
+        this.logInStatus = logInStatus;
     }
 
     @Override

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title> Code Verification </title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container text-center">
+    <form th:action="@{/home/verify-code}" method="get" th:object="${user} "
+          style="max-width: 600px; margin : 0 auto"
+    >
+        <div>
+            <h1>check your email and verify code</h1>
+        </div>
+
+        <div class="form-group">
+            <label for="verificationCode" class="text-info">VerificationCode:</label><br>
+            <input type="text" name="verificationCode" id="verificationCode" class="form-control" required
+                    maxlength="5"
+            >
+        </div>
+        <div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-info btn-md">Verify</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+    </body>
+</html>

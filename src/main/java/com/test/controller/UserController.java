@@ -1,18 +1,19 @@
 package com.test.controller;
 
-import com.test.model.Transaction;
 import com.test.model.User;
 import com.test.service.UserService;
-import com.test.util.exceptions.*;
+import com.test.util.exceptions.DuplicateException;
+import com.test.util.exceptions.DuplicateVerificationCode;
+import com.test.util.exceptions.NotFoundException;
+import com.test.util.exceptions.OutOfTimeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
-@Controller
+
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
@@ -21,7 +22,7 @@ public class UserController {
     private UserService userService;
 
     //  @RolesAllowed(value = "ROLE_ADMIN")
-    @GetMapping
+    @GetMapping("/user")
     public ResponseEntity<List<User>> getAll() {
         List<User> userList = userService.getAll();
         return ResponseEntity.ok(userList);
@@ -50,19 +51,22 @@ public class UserController {
     }
 
     //   @RolesAllowed(value = "ROLE_ADMIN")
-    @PostMapping
-    public void save(@Valid @RequestBody User user) throws DuplicateVerificationCode, DuplicateException {
+    @GetMapping("/saving")
+    public String save(@Valid @RequestBody User user) throws DuplicateVerificationCode, DuplicateException {
+        System.out.println("");
         userService.save(user);
+        return "login.html";
     }
 
     //working
-    @PostMapping("/login")
+    @GetMapping("/login")
     // @RolesAllowed(value = "ROLE_USER")
-    public boolean login(@RequestParam String email, @RequestParam String password) throws NotFoundException {
+    public String login(@RequestParam String email, @RequestParam String password) throws NotFoundException {
+        System.out.println("");
         if (userService.logIn(email, password)) {
-            return true;
+            return "hpmepage.html";
         }
-        return false;
+        return "login.html";
     }
 
     @PostMapping("/save-admin")
