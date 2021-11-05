@@ -1,1 +1,4 @@
 /src/main/resources/application.properties
+/src/main/java/com/test/filters/
+/src/main/java/com/test/controller/AuthController.java
+/src/main/java/com/test/controller/JwtUtil.java

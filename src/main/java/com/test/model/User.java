@@ -44,7 +44,7 @@ public class User {
 
 
     @OneToMany(mappedBy = "user")
-    private List<Transaction> transaction_id;
+    private List<Transaction> user_id;
 
     @Column
     private double account;
@@ -135,12 +135,12 @@ public class User {
         this.password = password;
     }
 
-    public List<Transaction> getTransaction_id() {
-        return transaction_id;
+    public List<Transaction> getUser_id() {
+        return user_id;
     }
 
-    public void setTransaction_id(List<Transaction> transaction_id) {
-        this.transaction_id = transaction_id;
+    public void setUser_id(List<Transaction> user_id) {
+        this.user_id = user_id;
     }
 
     public double getAccount() {

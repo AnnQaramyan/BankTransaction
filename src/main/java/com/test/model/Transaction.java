@@ -1,5 +1,7 @@
 package com.test.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.test.model.enums.TransactionStatus;
 import com.test.model.enums.TransactionType;
 
 import javax.persistence.*;
@@ -17,24 +19,26 @@ public class Transaction implements  Comparable<Transaction>{
     @NotNull
     private TransactionType transactionType;
 
+    @Enumerated(EnumType.STRING)
+    private TransactionStatus transactionStatus;
+
     @Column(name = "date")
     private Date date;
 
-    @JoinColumn(name = "transaction_id")
+    @JsonIgnore
+    @JoinColumn(name = "user_id")
     @ManyToOne
     private User user;
 
     @Column
-    private int userId;
+    private Double amount;
 
-    @Column
-    private double amount;
-
-    public Transaction(int id, @NotNull TransactionType transactionType, Date date, @NotNull double requiredAmount) {
+    public Transaction(int id, @NotNull TransactionType transactionType, Date date, User user, Double amount) {
         this.id = id;
         this.transactionType = transactionType;
         this.date = date;
-        this.amount = requiredAmount;
+        this.user = user;
+        this.amount = amount;
     }
 
     public Transaction() {
@@ -72,24 +76,35 @@ public class Transaction implements  Comparable<Transaction>{
         this.user = user;
     }
 
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
-    public int getUserId() {
-        return userId;
+    public TransactionStatus getTransactionStatus() {
+        return transactionStatus;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setTransactionStatus(TransactionStatus transactionStatus) {
+        this.transactionStatus = transactionStatus;
     }
 
     @Override
     public int compareTo(Transaction o) {
         return getDate().compareTo(o.getDate());
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id=" + id +
+                ", transactionType=" + transactionType +
+                ", date=" + date +
+                ", user=" + user +
+                ", amount=" + amount +
+                '}';
     }
 }

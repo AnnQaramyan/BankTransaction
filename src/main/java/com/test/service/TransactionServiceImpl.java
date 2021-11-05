@@ -2,6 +2,7 @@ package com.test.service;
 
 import com.test.model.Transaction;
 import com.test.model.User;
+import com.test.model.enums.TransactionStatus;
 import com.test.model.enums.TransactionType;
 import com.test.repository.TransactionRepository;
 import com.test.repository.UserRepository;
@@ -32,6 +33,7 @@ public class TransactionServiceImpl implements TransactionService {
     public void createTransaction(int userID, double amount, TransactionType transactionType) throws NotFoundException, InsufficientResources {
         User user = userService.getById(userID);
         Transaction transaction = new Transaction();
+        transaction.setTransactionStatus(TransactionStatus.PENDING);
         transaction.setAmount(amount);
         transaction.setTransactionType(transactionType);
         if (user.getLogInStatus().toString().equals("ACTIVE")) {
@@ -40,38 +42,33 @@ public class TransactionServiceImpl implements TransactionService {
             transaction.setUser(user);
 
             if (transaction.getTransactionType().toString().equals("DEPOSIT")) {
-                if (transaction.getAmount() < 0) {
-                    throw new InsufficientResources("There in not enough resources for this transaction");
-                } else {
-                    user.setAccount(user.getAccount() + transaction.getAmount());
-                    transaction.setAmount(0);
-                }
+             user.setAccount(user.getAccount() + amount);
             } else if (transaction.getTransactionType().toString().equals("WITHDRAWAL")) {
                 if (user.getAccount() - transaction.getAmount() < 0) {
-                    //
-                    //throw new InsufficientResources("There in not enough resources for this transaction");
+                    throw new InsufficientResources("There in not enough resources for this transaction");
                 } else {
                     user.setAccount(user.getAccount() - transaction.getAmount());
-                    transaction.setAmount(user.getAccount() - transaction.getAmount());
                 }
             } else {
-                throw new NotFoundException("there isn't this type of transaction");
+                throw new NotFoundException("There isn't this type of transaction");
             }
-            user.getTransaction_id().add(transaction);
+            user.getUser_id().add(transaction);
             userRepository.save(user);
             transactionRepository.save(transaction);
         } else {
-            cancelTransaction(transaction.getId(), user);
+            cancelTransaction(transaction.getId());
         }
     }
 
     @Override
-    public void cancelTransaction(int id, User user) {
-        deleteById(id);
-        List<Transaction> transactions = user.getTransaction_id();
-        transactions.remove(id);
-        user.setTransaction_id(transactions);
-        userRepository.save(user);
+    public void cancelTransaction(int id) {
+        if(getById(id).getTransactionStatus().toString().equals("PENDING")) {
+           transactionRepository.deleteById(id);
+          // List<Transaction> transactions = user.getTransactions();
+          // transactions.remove(id);
+          // user.setTransactions(transactions);
+         //  userRepository.save(user);
+      }
     }
 
     @Override
@@ -81,7 +78,9 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<Transaction> getAll() {
-        return transactionRepository.findAll().stream().sorted().collect(Collectors.toList());
+        return transactionRepository.
+                findAll();
+               // .stream().sorted().collect(Collectors.toList());
     }
 
     @Override

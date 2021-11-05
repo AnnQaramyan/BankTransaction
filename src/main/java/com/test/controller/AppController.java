@@ -7,10 +7,12 @@ import com.test.service.TransactionService;
 import com.test.service.UserService;
 import com.test.util.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -75,14 +77,29 @@ public class AppController {
     }
 
     @GetMapping("/create-transaction")
-    public String createTransaction(int userId, double amount, TransactionType transactionType) throws NotFoundException, InsufficientResources {
-        transactionService.createTransaction(userId, amount, transactionType);
-        return "transactionSuccess.html";
+   // @RolesAllowed("ROLE_ADMIN")
+    public String createTransaction(double amount, TransactionType transactionType) throws NotFoundException, InsufficientResources {
+       /* Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        System.out.println(currentPrincipalName);*/
+        /* String currentUserName = null;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            currentUserName = authentication.getName();
+        }
+        // String username = principal.getName();
+        System.out.println("0000000000000000000000000" + currentUserName);*/
+        //  User user = userService.getByEmail(currentPrincipalName);
+
+        transactionService.createTransaction(1, amount, transactionType);
+        return "personal_account.html";
     }
 
     @GetMapping("/transactions")
-    public ResponseEntity<List<Transaction>> getAll() {
-        return ResponseEntity.ok(transactionService.getAll());
+    public String getAll(Model model) {
+        List<Transaction> transactions = transactionService.getAll();
+        model.addAttribute("transactions", transactions);
+        return "transaction_list.html";
 
     }
 
@@ -93,14 +110,14 @@ public class AppController {
 
     @GetMapping("/cancel-transaction")
     public String cancelTransaction(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("transaction", new Transaction());
         return "canceling_process.html";
     }
 
-    @GetMapping("/process-canceling")
-    public String cancelTransactionById(int id, User user) {
-        transactionService.cancelTransaction(id, user);
-        return "personal-account.html";
+    @GetMapping("/process_canceling/{id}")
+    public String cancelTransactionById(@PathVariable int id) {
+        transactionService.cancelTransaction(id);
+        return "personal_account.html";
     }
 
 }

@@ -15,6 +15,6 @@ public interface TransactionService {
     List<Transaction> getAll();
     Transaction getById(int id);
     void deleteById(int id);
-    void cancelTransaction(int id, User user);
+    void cancelTransaction(int id);
     void save(Transaction transaction);
 }
